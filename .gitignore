@@ -1,0 +1,43 @@
+﻿# ================================
+# NEXUS AI - Git Ignore
+# ================================
+
+# Environment / Secrets
+.env
+.env.*
+*.env
+
+# Spring Boot configuration secrets
+application-local.properties
+application-local.yml
+application-local.yaml
+
+# Java / Maven
+target/
+*.class
+*.log
+
+# IntelliJ / IDE
+.idea/
+*.iml
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Node / React
+node_modules/
+dist/
+build/
+.vite/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary / backup files
+*.tmp
+*.temp
+*.bak
+*.backup

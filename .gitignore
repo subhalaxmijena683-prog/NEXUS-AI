@@ -41,3 +41,7 @@ Thumbs.db
 *.temp
 *.bak
 *.backup
+
+# NEXUS AI local uploads and old build files
+backend/uploads/
+backend/target_old/

@@ -1,15 +1,16 @@
 package com.nexusai.agent;
 
+import com.nexusai.service.LLMService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class DecisionAgent {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final LLMService llmService;
+
+    public DecisionAgent(LLMService llmService) {
+        this.llmService = llmService;
+    }
 
     public String makeDecision(
             String problem,
@@ -17,7 +18,7 @@ public class DecisionAgent {
             String analysis,
             String knowledge) {
 
-        String prompt = """
+        String systemPrompt = """
                 You are the Decision Agent of NEXUS AI,
                 an autonomous enterprise intelligence platform.
 
@@ -25,17 +26,11 @@ public class DecisionAgent {
                 specialized AI agents and produce a practical
                 enterprise decision.
 
-                PROBLEM:
-                %s
-
-                RESEARCH AGENT OUTPUT:
-                %s
-
-                DATA ANALYST AGENT OUTPUT:
-                %s
-
-                RAG KNOWLEDGE AGENT OUTPUT:
-                %s
+                IMPORTANT:
+                - Base the decision on the provided evidence.
+                - Do not invent company-specific facts.
+                - Clearly identify assumptions.
+                - Keep the recommendation practical and concise.
 
                 Provide the final response using these sections:
 
@@ -48,12 +43,20 @@ public class DecisionAgent {
                 RECOMMENDED ACTIONS
 
                 EXPECTED OUTCOME
+                """;
 
-                IMPORTANT:
-                - Base the decision on the provided evidence.
-                - Do not invent company-specific facts.
-                - Clearly identify assumptions.
-                - Keep the recommendation practical and concise.
+        String userPrompt = """
+                PROBLEM:
+                %s
+
+                RESEARCH AGENT OUTPUT:
+                %s
+
+                DATA ANALYST AGENT OUTPUT:
+                %s
+
+                RAG KNOWLEDGE AGENT OUTPUT:
+                %s
                 """.formatted(
                 problem,
                 research,
@@ -63,23 +66,10 @@ public class DecisionAgent {
 
         try {
 
-            Map<String, Object> request = new HashMap<>();
-
-            request.put("model", "llama3.2:3b");
-            request.put("prompt", prompt);
-            request.put("stream", false);
-
-            Map<?, ?> response = restTemplate.postForObject(
-                    "http://localhost:11434/api/generate",
-                    request,
-                    Map.class
+            return llmService.generate(
+                    systemPrompt,
+                    userPrompt
             );
-
-            if (response != null && response.get("response") != null) {
-                return response.get("response").toString();
-            }
-
-            return "Decision Agent did not receive a response.";
 
         } catch (Exception e) {
 

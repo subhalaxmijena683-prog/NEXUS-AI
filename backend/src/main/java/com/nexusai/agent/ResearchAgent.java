@@ -1,30 +1,44 @@
 package com.nexusai.agent;
 
+import com.nexusai.service.AnalyticsService;
+import com.nexusai.service.LLMService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
+import java.time.LocalDateTime;
 
 @Service
 public class ResearchAgent {
 
-    private final RestTemplate restTemplate;
+    private final LLMService llmService;
+    private final AnalyticsService analyticsService;
 
-    public ResearchAgent() {
-        this.restTemplate = new RestTemplate();
+    public ResearchAgent(
+            LLMService llmService,
+            AnalyticsService analyticsService
+    ) {
+        this.llmService = llmService;
+        this.analyticsService = analyticsService;
     }
 
     public String research(String task) {
 
         if (task == null || task.isBlank()) {
-            throw new IllegalArgumentException("Research task cannot be empty");
+            throw new IllegalArgumentException(
+                    "Research task cannot be empty"
+            );
         }
 
-        String prompt = """
+        LocalDateTime startedAt =
+                LocalDateTime.now();
+
+        long startTime =
+                System.currentTimeMillis();
+
+        String systemPrompt = """
                 You are the NEXUS AI Research Agent.
 
-                Your responsibility is to research and analyze a
-                business or enterprise problem.
+                Your responsibility is to research and analyze
+                business and enterprise problems.
 
                 Follow these steps:
 
@@ -56,26 +70,42 @@ public class ResearchAgent {
 
                 LIMITATIONS:
                 <limitations>
+                """;
 
-                Research Task:
-                """ + task;
+        try {
 
-        Map<String, Object> request = Map.of(
-                "model", "llama3.2:3b",
-                "prompt", prompt,
-                "stream", false
-        );
+            String result =
+                    llmService.generate(
+                            systemPrompt,
+                            task
+                    );
 
-        Map<?, ?> response = restTemplate.postForObject(
-                "http://localhost:11434/api/generate",
-                request,
-                Map.class
-        );
+            long durationMs =
+                    System.currentTimeMillis()
+                            - startTime;
 
-        if (response == null || response.get("response") == null) {
-            return "Research Agent did not generate a response.";
+            analyticsService.recordSuccess(
+                    "Research Agent",
+                    startedAt,
+                    durationMs
+            );
+
+            return result;
+
+        } catch (Exception e) {
+
+            long durationMs =
+                    System.currentTimeMillis()
+                            - startTime;
+
+            analyticsService.recordFailure(
+                    "Research Agent",
+                    startedAt,
+                    durationMs,
+                    e.getMessage()
+            );
+
+            throw e;
         }
-
-        return response.get("response").toString();
     }
 }

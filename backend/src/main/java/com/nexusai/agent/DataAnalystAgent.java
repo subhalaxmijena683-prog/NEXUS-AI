@@ -1,17 +1,23 @@
 package com.nexusai.agent;
 
+import com.nexusai.service.AnalyticsService;
+import com.nexusai.service.LLMService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
+import java.time.LocalDateTime;
 
 @Service
 public class DataAnalystAgent {
 
-    private final RestTemplate restTemplate;
+    private final LLMService llmService;
+    private final AnalyticsService analyticsService;
 
-    public DataAnalystAgent() {
-        this.restTemplate = new RestTemplate();
+    public DataAnalystAgent(
+            LLMService llmService,
+            AnalyticsService analyticsService
+    ) {
+        this.llmService = llmService;
+        this.analyticsService = analyticsService;
     }
 
     public String analyze(String task) {
@@ -22,7 +28,13 @@ public class DataAnalystAgent {
             );
         }
 
-        String prompt = """
+        LocalDateTime startedAt =
+                LocalDateTime.now();
+
+        long startTime =
+                System.currentTimeMillis();
+
+        String systemPrompt = """
                 You are the NEXUS AI Data Analyst Agent.
 
                 Your responsibility is to analyze business,
@@ -32,7 +44,7 @@ public class DataAnalystAgent {
                 Follow these steps:
 
                 1. Understand the analysis request.
-                2. Identify the important metrics and variables.
+                2. Identify important metrics and variables.
                 3. Analyze the provided information.
                 4. Identify patterns and trends.
                 5. Identify risks or anomalies.
@@ -41,7 +53,8 @@ public class DataAnalystAgent {
 
                 IMPORTANT:
                 Do not invent real data.
-                If the user has not provided numerical data,
+
+                If numerical data has not been provided,
                 perform conceptual analysis and clearly state
                 that actual data is required for quantitative
                 conclusions.
@@ -72,26 +85,42 @@ public class DataAnalystAgent {
 
                 DATA LIMITATIONS:
                 <limitations>
+                """;
 
-                Analysis Task:
-                """ + task;
+        try {
 
-        Map<String, Object> request = Map.of(
-                "model", "llama3.2:3b",
-                "prompt", prompt,
-                "stream", false
-        );
+            String result =
+                    llmService.generate(
+                            systemPrompt,
+                            task
+                    );
 
-        Map<?, ?> response = restTemplate.postForObject(
-                "http://localhost:11434/api/generate",
-                request,
-                Map.class
-        );
+            long durationMs =
+                    System.currentTimeMillis()
+                            - startTime;
 
-        if (response == null || response.get("response") == null) {
-            return "Data Analyst Agent did not generate a response.";
+            analyticsService.recordSuccess(
+                    "Data Analyst Agent",
+                    startedAt,
+                    durationMs
+            );
+
+            return result;
+
+        } catch (Exception e) {
+
+            long durationMs =
+                    System.currentTimeMillis()
+                            - startTime;
+
+            analyticsService.recordFailure(
+                    "Data Analyst Agent",
+                    startedAt,
+                    durationMs,
+                    e.getMessage()
+            );
+
+            throw e;
         }
-
-        return response.get("response").toString();
     }
 }

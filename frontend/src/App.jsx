@@ -370,7 +370,7 @@ function Dashboard({ setActivePage }) {
               <span>Web research and intelligence</span>
             </div>
 
-            <span className="online">ONLINE</span>
+            {/* <span className="online">ONLINE</span> */}
           </div>
 
           <div className="agent">
@@ -381,7 +381,7 @@ function Dashboard({ setActivePage }) {
               <span>Data analysis and insights</span>
             </div>
 
-            <span className="online">ONLINE</span>
+            {/* <span className="online">ONLINE</span> */}
           </div>
 
           <div className="agent">
@@ -392,7 +392,7 @@ function Dashboard({ setActivePage }) {
               <span>Enterprise RAG intelligence</span>
             </div>
 
-            <span className="online">ONLINE</span>
+            {/* <span className="online">ONLINE</span> */}
           </div>
 
           <div className="agent">
@@ -403,7 +403,7 @@ function Dashboard({ setActivePage }) {
               <span>Decision validation</span>
             </div>
 
-            <span className="online">ONLINE</span>
+            {/* <span className="online">ONLINE</span> */}
           </div>
         </div>
 
@@ -439,6 +439,396 @@ function Dashboard({ setActivePage }) {
         </div>
       </div>
     </>
+  );
+}
+function Settings() {
+  const [notifications, setNotifications] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [theme, setTheme] = useState("dark");
+
+  const userName =
+    localStorage.getItem("userName") || "Admin User";
+
+  const userEmail =
+    localStorage.getItem("userEmail") || "Enterprise User";
+
+  const initial =
+    userName.charAt(0).toUpperCase();
+
+  return (
+    <section className="settings-page">
+
+      {/* HEADER */}
+      <div className="settings-header">
+
+        <div>
+          <span className="section-label">
+            ⚙ NEXUS AI CONTROL CENTER
+          </span>
+
+          <h2>Platform Settings</h2>
+
+          <p>
+            Configure your enterprise intelligence environment,
+            AI behavior, account preferences and system controls.
+          </p>
+        </div>
+
+        {/* <div className="settings-status-badge">
+          <span className="settings-status-dot"></span>
+          Backend Online
+        </div> */}
+
+      </div>
+
+
+      {/* PROFILE + AI ENGINE */}
+      <div className="settings-grid">
+
+        {/* ACCOUNT */}
+        <div className="settings-card">
+
+          <div className="settings-card-header">
+            <div className="settings-card-icon">
+              👤
+            </div>
+
+            <div>
+              <span className="settings-label">
+                PROFILE
+              </span>
+
+              <h3>Account</h3>
+            </div>
+          </div>
+
+          <div className="profile-block">
+
+            <div className="profile-avatar">
+              {initial}
+            </div>
+
+            <div className="profile-info">
+              <strong>{userName}</strong>
+              <span>{userEmail}</span>
+
+              <div className="role-badge">
+                <span></span>
+                Enterprise User
+              </div>
+            </div>
+
+          </div>
+
+          <div className="settings-divider"></div>
+
+          <div className="settings-info-row">
+            <span>Account Status</span>
+            <strong className="success-text">
+              Active
+            </strong>
+          </div>
+
+          <div className="settings-info-row">
+            <span>Authentication</span>
+            <strong>JWT Secured</strong>
+          </div>
+
+        </div>
+
+
+        {/* AI ENGINE */}
+        <div className="settings-card">
+
+          <div className="settings-card-header">
+            <div className="settings-card-icon ai-icon">
+              ✦
+            </div>
+
+            <div>
+              <span className="settings-label">
+                INTELLIGENCE ENGINE
+              </span>
+
+              <h3>AI Configuration</h3>
+            </div>
+          </div>
+
+          <p className="settings-card-description">
+            Configure the intelligence layer powering
+            NEXUS AI's autonomous agents.
+          </p>
+
+          <div className="engine-status">
+            <div className="engine-status-left">
+              <span className="engine-dot"></span>
+
+              <div>
+                <strong>AI Engine Operational</strong>
+                <span>Multi-Agent orchestration active</span>
+              </div>
+            </div>
+
+            <span className="active-badge">
+              ACTIVE
+            </span>
+          </div>
+
+          <div className="settings-info-row">
+            <span>Architecture</span>
+            <strong>Multi-Agent</strong>
+          </div>
+
+          <div className="settings-info-row">
+            <span>Knowledge Layer</span>
+            <strong>RAG Enabled</strong>
+          </div>
+
+          <div className="settings-info-row">
+            <span>AI Provider</span>
+            <strong>Configured</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* PREFERENCES */}
+      <div className="settings-section-title">
+        <span className="section-label">
+          PLATFORM
+        </span>
+
+        <h3>Preferences</h3>
+
+        <p>
+          Control how NEXUS AI behaves during your session.
+        </p>
+      </div>
+
+
+      <div className="settings-preferences">
+
+        {/* Notifications */}
+        <div className="preference-card">
+
+          <div className="preference-icon">
+            🔔
+          </div>
+
+          <div className="preference-content">
+            <strong>Notifications</strong>
+
+            <span>
+              Receive important system and agent updates.
+            </span>
+          </div>
+
+          <button
+            className={`settings-toggle ${
+              notifications ? "active" : ""
+            }`}
+            onClick={() =>
+              setNotifications(!notifications)
+            }
+          >
+            <span></span>
+          </button>
+
+        </div>
+
+
+        {/* Auto Refresh */}
+        <div className="preference-card">
+
+          <div className="preference-icon">
+            ↻
+          </div>
+
+          <div className="preference-content">
+            <strong>Auto Refresh</strong>
+
+            <span>
+              Automatically refresh analytics and system metrics.
+            </span>
+          </div>
+
+          <button
+            className={`settings-toggle ${
+              autoRefresh ? "active" : ""
+            }`}
+            onClick={() =>
+              setAutoRefresh(!autoRefresh)
+            }
+          >
+            <span></span>
+          </button>
+
+        </div>
+
+
+        {/* Theme */}
+        <div className="preference-card">
+
+          <div className="preference-icon">
+            ◐
+          </div>
+
+          <div className="preference-content">
+            <strong>Interface Theme</strong>
+
+            <span>
+              Choose the appearance of your NEXUS workspace.
+            </span>
+          </div>
+
+          <div className="theme-selector">
+
+            <button
+              className={
+                theme === "dark" ? "selected" : ""
+              }
+              onClick={() => setTheme("dark")}
+            >
+              Dark
+            </button>
+
+            <button
+              className={
+                theme === "system" ? "selected" : ""
+              }
+              onClick={() => setTheme("system")}
+            >
+              System
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* SYSTEM ARCHITECTURE */}
+      {/* <div className="settings-section-title">
+
+        <span className="section-label">
+          INFRASTRUCTURE
+        </span>
+
+        <h3>System Architecture</h3>
+
+        <p>
+          Current NEXUS AI enterprise platform configuration.
+        </p>
+
+      </div> */}
+
+
+      <div className="architecture-grid">
+
+        {/* <div className="architecture-card">
+          <div className="architecture-icon">
+            ◈
+          </div>
+
+          <div>
+            <span>PLATFORM</span>
+            <strong>NEXUS AI</strong>
+            <small>Enterprise Intelligence</small>
+          </div>
+
+          <div className="architecture-check">
+            ✓
+          </div>
+        </div> */}
+
+
+        {/* <div className="architecture-card">
+          <div className="architecture-icon">
+            ◎
+          </div>
+
+          <div>
+            <span>DATABASE</span>
+            <strong>PostgreSQL</strong>
+            <small>Enterprise data layer</small>
+          </div>
+
+          <div className="architecture-check">
+            ✓
+          </div>
+        </div>
+
+
+        <div className="architecture-card">
+          <div className="architecture-icon">
+            ◉
+          </div>
+
+          <div>
+            <span>KNOWLEDGE</span>
+            <strong>RAG Engine</strong>
+            <small>Context-aware intelligence</small>
+          </div>
+
+          <div className="architecture-check">
+            ✓
+          </div>
+        </div>
+
+
+        <div className="architecture-card">
+          <div className="architecture-icon">
+            ⚡
+          </div>
+
+          <div>
+            <span>SECURITY</span>
+            <strong>JWT</strong>
+            <small>Authenticated access</small>
+          </div>
+
+          <div className="architecture-check">
+            ✓
+          </div>
+        </div> */}
+
+      </div>
+
+
+      {/* FINAL STATUS */}
+      {/* <div className="configuration-banner">
+
+        <div className="configuration-glow"></div>
+
+        <div className="configuration-icon">
+          ✓
+        </div>
+
+        <div>
+          <span className="section-label">
+            ENTERPRISE INTELLIGENCE
+          </span>
+
+          <h3>NEXUS AI is ready</h3>
+
+          <p>
+            Your enterprise intelligence platform is
+            configured and ready to research, analyze,
+            reason and execute intelligent workflows.
+          </p>
+        </div>
+
+        <div className="configuration-state">
+          <span></span>
+          Configuration Ready
+        </div>
+
+      </div> */}
+
+    </section>
   );
 }
 
@@ -693,7 +1083,7 @@ function AIChat() {
         localStorage.getItem("jwt") ||
         localStorage.getItem("accessToken");
 
-      const res = await fetch(`${API_BASE}/api/agents/chat`, {
+const res = await fetch(`${API_BASE}/api/ai/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -704,8 +1094,7 @@ function AIChat() {
             : {}),
         },
         body: JSON.stringify({
-          message: message.trim(),
-          question: message.trim(),
+         message: message.trim(),
         }),
       });
 
@@ -948,6 +1337,196 @@ function Workflows() {
   );
 }
 
+function Analytics() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function loadAnalytics() {
+      try {
+        const token =
+          localStorage.getItem("token") ||
+          localStorage.getItem("jwt") ||
+          localStorage.getItem("accessToken");
+
+        const response = await fetch(
+          `${API_BASE}/api/analytics`,
+          {
+            headers: token
+              ? {
+                  Authorization: `Bearer ${token}`,
+                }
+              : {},
+          }
+        );
+
+        const text = await response.text();
+
+let result = {};
+
+if (text) {
+  try {
+    result = JSON.parse(text);
+  } catch {
+    result = {};
+  }
+}
+
+if (!response.ok) {
+  throw new Error(
+    result?.message ||
+    `Analytics request failed (${response.status})`
+  );
+}
+
+        setData(result);
+      } catch (err) {
+        console.error("Analytics error:", err);
+        setError(err.message || "Unable to load analytics.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAnalytics();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="page-panel">
+        <span className="section-label">
+          ▥ NEXUS AI ANALYTICS
+        </span>
+
+        <h2>Analytics</h2>
+
+        <p>Loading enterprise analytics...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="page-panel">
+        <span className="section-label">
+          ▥ NEXUS AI ANALYTICS
+        </span>
+
+        <h2>Analytics</h2>
+
+        <p>{error}</p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="page-panel">
+
+      <span className="section-label">
+        ▥ NEXUS AI ANALYTICS
+      </span>
+
+      <h2>Agent Analytics</h2>
+
+      <p>
+        Monitor agent executions, success rate, failures
+        and execution performance.
+      </p>
+
+      <div className="stats">
+
+        <div className="stat-card">
+          <span>Total Executions</span>
+          <strong>
+            {data?.totalExecutions ?? 0}
+          </strong>
+          <small>Agent executions</small>
+        </div>
+
+        <div className="stat-card">
+          <span>Successful</span>
+          <strong>
+            {data?.successfulExecutions ?? 0}
+          </strong>
+          <small>Completed successfully</small>
+        </div>
+
+        <div className="stat-card">
+          <span>Failed</span>
+          <strong>
+            {data?.failedExecutions ?? 0}
+          </strong>
+          <small>Failed executions</small>
+        </div>
+
+        <div className="stat-card">
+          <span>Avg Duration</span>
+          <strong>
+            {data?.averageDurationMs ?? 0} ms
+          </strong>
+          <small>Average execution time</small>
+        </div>
+
+      </div>
+
+      <div className="panel">
+
+        <div className="panel-header">
+          <div>
+            <span className="section-label">
+              EXECUTION HISTORY
+            </span>
+
+            <h3>Agent Activity</h3>
+          </div>
+        </div>
+
+        {data?.executions?.length === 0 ? (
+          <p>
+            No agent executions recorded yet.
+          </p>
+        ) : (
+          data.executions.map((execution) => (
+            <div
+              className="agent"
+              key={execution.id}
+            >
+              <div className="agent-icon">
+                {execution.agentName?.charAt(0) || "A"}
+              </div>
+
+              <div>
+                <strong>
+                  {execution.agentName}
+                </strong>
+
+                <span>
+                  {execution.durationMs} ms
+                </span>
+              </div>
+
+              <span
+                className={
+                  execution.status === "SUCCESS"
+                    ? "online"
+                    : "offline-status"
+                }
+              >
+                {execution.status}
+              </span>
+            </div>
+          ))
+        )}
+
+      </div>
+
+    </section>
+  );
+}
+
+
+
 function App() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [backendOnline, setBackendOnline] = useState(false);
@@ -1044,22 +1623,11 @@ if (!isLoggedIn) {
         return <Workflows />;
 
       case "Analytics":
-        return (
-          <GenericPage
-            title="Analytics"
-            icon="▥"
-            description="Monitor enterprise intelligence, agent activity, workflow execution and business insights."
-          />
-        );
+  return <Analytics />;
+
 
       case "Settings":
-        return (
-          <GenericPage
-            title="Settings"
-            icon="⚙"
-            description="Configure NEXUS AI, enterprise preferences, AI models and platform settings."
-          />
-        );
+  return <Settings />;
 
       default:
         return <Dashboard setActivePage={setActivePage} />;
@@ -1141,7 +1709,7 @@ if (!isLoggedIn) {
 
             <h1>{activePage}</h1>
           </div>
-
+{/* 
           <div
             className={`status ${
               backendOnline
@@ -1154,7 +1722,7 @@ if (!isLoggedIn) {
             {backendOnline
               ? "Backend Online"
               : "Backend Offline"}
-          </div>
+          </div> */}
 
         </div>
 

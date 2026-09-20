@@ -75,24 +75,6 @@ public class SecurityConfig {
                     "/api/ai/chat"
                 ).permitAll()
 
-                // Temporary public access for Research Agent testing
-                .requestMatchers(
-                    HttpMethod.POST,
-                    "/api/agents/research"
-                ).permitAll()
-
-                // Temporary public access for Data Analyst Agent testing
-                .requestMatchers(
-                    HttpMethod.POST,
-                    "/api/agents/data-analyst"
-                ).permitAll()
-
-                // Temporary public access for RAG Knowledge Agent testing
-                .requestMatchers(
-                    HttpMethod.POST,
-                    "/api/agents/rag"
-                ).permitAll()
-
                 // All other APIs require JWT authentication
                 .anyRequest().authenticated()
             )

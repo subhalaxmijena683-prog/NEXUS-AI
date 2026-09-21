@@ -1257,7 +1257,7 @@ function Workflows() {
         </div>
 
         <div className="feature-card">
-          <strong>??  RAG Knowledge Agent</strong>
+          <strong>??ï¿½ RAG Knowledge Agent</strong>
           <span>
             Retrieves relevant information from enterprise
             documents.
@@ -1539,7 +1539,7 @@ function App() {
 const [authPage, setAuthPage] = useState("login");
 
  const navItems = [
-  { name: "Dashboard", icon: "¦" },
+  { name: "Dashboard", icon: "ï¿½" },
   { name: "AI Chat", icon: "?" },
   { name: "Agents", icon: "?" },
   { name: "Knowledge", icon: "?" },

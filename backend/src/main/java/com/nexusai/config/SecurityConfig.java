@@ -102,12 +102,12 @@ public class SecurityConfig {
             new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-    List.of(
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "https://nexus-ai-1-ztz2.onrender.com"
-    )
-);
+           List.of(
+              "http://localhost:5173",
+               "http://127.0.0.1:5173",
+               "https://nexus-ai-1-ztz2.onrender.com"
+           )
+    );
 
         configuration.setAllowedMethods(
             List.of(

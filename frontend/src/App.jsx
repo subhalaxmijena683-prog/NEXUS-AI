@@ -463,7 +463,7 @@ function Settings() {
 
         <div>
           <span className="section-label">
-            ? NEXUS AI CONTROL CENTER
+            NEXUS AI CONTROL CENTER
           </span>
 
           <h2>Platform Settings</h2>
@@ -986,7 +986,7 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>?? Research Agent</strong>
+          <strong>R Research Agent</strong>
           <span>
             Research topics and generate intelligent insights.
           </span>
@@ -1003,7 +1003,7 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>?? Data Analyst Agent</strong>
+          <strong>D Data Analyst Agent</strong>
           <span>
             Analyze data, identify trends and generate insights.
           </span>
@@ -1020,7 +1020,7 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>?? RAG Knowledge Agent</strong>
+          <strong>K RAG Knowledge Agent</strong>
           <span>
             Ask questions using your uploaded enterprise documents.
           </span>
@@ -1226,7 +1226,7 @@ function Workflows() {
     <section className="page-panel">
 
       <span className="section-label">
-       ? AUTONOMOUS ENTERPRISE INTELLIGENCE
+       AUTONOMOUS ENTERPRISE INTELLIGENCE
       </span>
 
       <h2>Multi-Agent Workflows</h2>
@@ -1241,7 +1241,7 @@ function Workflows() {
       <div className="feature-grid">
 
         <div className="feature-card">
-          <strong>?? Research Agent</strong>
+          <strong>R Research Agent</strong>
           <span>
             Investigates the problem and gathers relevant
             intelligence.
@@ -1249,7 +1249,7 @@ function Workflows() {
         </div>
 
         <div className="feature-card">
-          <strong>?? Data Analyst Agent</strong>
+          <strong>D Data Analyst Agent</strong>
           <span>
             Analyzes research findings, trends, risks and
             opportunities.
@@ -1265,7 +1265,7 @@ function Workflows() {
         </div>
 
         <div className="feature-card">
-          <strong>??Decision Agent</strong>
+          <strong>J Decision Agent</strong>
           <span>
             Combines all agent outputs and generates a
             practical enterprise decision.
@@ -1396,7 +1396,7 @@ if (!response.ok) {
     return (
       <section className="page-panel">
         <span className="section-label">
-          ? NEXUS AI ANALYTICS
+          NEXUS AI ANALYTICS
         </span>
 
         <h2>Analytics</h2>
@@ -1410,7 +1410,7 @@ if (!response.ok) {
     return (
       <section className="page-panel">
         <span className="section-label">
-          ? NEXUS AI ANALYTICS
+          NEXUS AI ANALYTICS
         </span>
 
         <h2>Analytics</h2>
@@ -1424,7 +1424,7 @@ if (!response.ok) {
     <section className="page-panel">
 
       <span className="section-label">
-        ? NEXUS AI ANALYTICS
+        NEXUS AI ANALYTICS
       </span>
 
       <h2>Agent Analytics</h2>
@@ -1539,13 +1539,13 @@ function App() {
 const [authPage, setAuthPage] = useState("login");
 
  const navItems = [
-  { name: "Dashboard", icon: "�" },
-  { name: "AI Chat", icon: "?" },
-  { name: "Agents", icon: "?" },
-  { name: "Knowledge", icon: "?" },
-  { name: "Workflows", icon: "?" },
-  { name: "Analytics", icon: "?" },
-  { name: "Settings", icon: "?" },
+  { name: "Dashboard", icon: "D" },
+  { name: "AI Chat", icon: "C" },
+  { name: "Agents", icon: "A" },
+  { name: "Knowledge", icon: "K" },
+  { name: "Workflows", icon: "W" },
+  { name: "Analytics", icon: "N" },
+  { name: "Settings", icon: "S" },
 ];
 
   useEffect(() => {
@@ -1689,7 +1689,7 @@ if (!isLoggedIn) {
   onClick={handleLogout}
   title="Sign out of NEXUS AI"
 >
-  <span className="logout-icon">?</span>
+  <span className="logout-icon">X</span>
   <span>Logout</span>
 </button>
 

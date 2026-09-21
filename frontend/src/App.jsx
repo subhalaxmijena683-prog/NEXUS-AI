@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import "./App.css";
 //import "./index.css";
 
-const API_BASE = "http://localhost:8081";
+const API_BASE = "https://nexus-ai-n3oc.onrender.com";
 
 function Knowledge() {
   const [file, setFile] = useState(null);

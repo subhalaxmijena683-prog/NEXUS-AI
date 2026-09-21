@@ -1,7 +1,7 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
-const API_BASE = "http://localhost:8081";
+const API_BASE = "https://nexus-ai-n3oc.onrender.com";
 
 function Register({ onRegister, onGoToLogin }) {
   const [name, setName] = useState("");

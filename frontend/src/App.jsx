@@ -1,4 +1,4 @@
-﻿
+
 import Login from "./Login";
 import Register from "./Register";
 import { useEffect, useState } from "react";
@@ -417,22 +417,22 @@ function Dashboard({ setActivePage }) {
 
           <div className="quick-actions">
             <button onClick={() => setActivePage("AI Chat")}>
-              <span>✦</span>
+              <span>?</span>
               Ask NEXUS AI
             </button>
 
             <button onClick={() => setActivePage("Knowledge")}>
-              <span>◈</span>
+              <span>?</span>
               Search Knowledge
             </button>
 
             <button onClick={() => setActivePage("Agents")}>
-              <span>◆</span>
+              <span>?</span>
               Run AI Agent
             </button>
 
             <button onClick={() => setActivePage("Workflows")}>
-              <span>⚡</span>
+              <span>?</span>
               Create Workflow
             </button>
           </div>
@@ -463,7 +463,7 @@ function Settings() {
 
         <div>
           <span className="section-label">
-            ⚙ NEXUS AI CONTROL CENTER
+            ? NEXUS AI CONTROL CENTER
           </span>
 
           <h2>Platform Settings</h2>
@@ -490,7 +490,7 @@ function Settings() {
 
           <div className="settings-card-header">
             <div className="settings-card-icon">
-              👤
+              ??
             </div>
 
             <div>
@@ -542,7 +542,7 @@ function Settings() {
 
           <div className="settings-card-header">
             <div className="settings-card-icon ai-icon">
-              ✦
+              ?
             </div>
 
             <div>
@@ -614,7 +614,7 @@ function Settings() {
         <div className="preference-card">
 
           <div className="preference-icon">
-            🔔
+            ??
           </div>
 
           <div className="preference-content">
@@ -643,7 +643,7 @@ function Settings() {
         <div className="preference-card">
 
           <div className="preference-icon">
-            ↻
+            ?
           </div>
 
           <div className="preference-content">
@@ -672,7 +672,7 @@ function Settings() {
         <div className="preference-card">
 
           <div className="preference-icon">
-            ◐
+            ?
           </div>
 
           <div className="preference-content">
@@ -730,7 +730,7 @@ function Settings() {
 
         {/* <div className="architecture-card">
           <div className="architecture-icon">
-            ◈
+            ?
           </div>
 
           <div>
@@ -740,14 +740,14 @@ function Settings() {
           </div>
 
           <div className="architecture-check">
-            ✓
+            ?
           </div>
         </div> */}
 
 
         {/* <div className="architecture-card">
           <div className="architecture-icon">
-            ◎
+            ?
           </div>
 
           <div>
@@ -757,14 +757,14 @@ function Settings() {
           </div>
 
           <div className="architecture-check">
-            ✓
+            ?
           </div>
         </div>
 
 
         <div className="architecture-card">
           <div className="architecture-icon">
-            ◉
+            ?
           </div>
 
           <div>
@@ -774,14 +774,14 @@ function Settings() {
           </div>
 
           <div className="architecture-check">
-            ✓
+            ?
           </div>
         </div>
 
 
         <div className="architecture-card">
           <div className="architecture-icon">
-            ⚡
+            ?
           </div>
 
           <div>
@@ -791,7 +791,7 @@ function Settings() {
           </div>
 
           <div className="architecture-check">
-            ✓
+            ?
           </div>
         </div> */}
 
@@ -804,7 +804,7 @@ function Settings() {
         <div className="configuration-glow"></div>
 
         <div className="configuration-icon">
-          ✓
+          ?
         </div>
 
         <div>
@@ -986,7 +986,7 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>🔎 Research Agent</strong>
+          <strong>?? Research Agent</strong>
           <span>
             Research topics and generate intelligent insights.
           </span>
@@ -1003,7 +1003,7 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>📊 Data Analyst Agent</strong>
+          <strong>?? Data Analyst Agent</strong>
           <span>
             Analyze data, identify trends and generate insights.
           </span>
@@ -1020,7 +1020,7 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>🧠 RAG Knowledge Agent</strong>
+          <strong>?? RAG Knowledge Agent</strong>
           <span>
             Ask questions using your uploaded enterprise documents.
           </span>
@@ -1226,7 +1226,7 @@ function Workflows() {
     <section className="page-panel">
 
       <span className="section-label">
-       ⚙ AUTONOMOUS ENTERPRISE INTELLIGENCE
+       ? AUTONOMOUS ENTERPRISE INTELLIGENCE
       </span>
 
       <h2>Multi-Agent Workflows</h2>
@@ -1241,7 +1241,7 @@ function Workflows() {
       <div className="feature-grid">
 
         <div className="feature-card">
-          <strong>🔎 Research Agent</strong>
+          <strong>?? Research Agent</strong>
           <span>
             Investigates the problem and gathers relevant
             intelligence.
@@ -1249,7 +1249,7 @@ function Workflows() {
         </div>
 
         <div className="feature-card">
-          <strong>📊 Data Analyst Agent</strong>
+          <strong>?? Data Analyst Agent</strong>
           <span>
             Analyzes research findings, trends, risks and
             opportunities.
@@ -1257,7 +1257,7 @@ function Workflows() {
         </div>
 
         <div className="feature-card">
-          <strong>🧠  RAG Knowledge Agent</strong>
+          <strong>??� RAG Knowledge Agent</strong>
           <span>
             Retrieves relevant information from enterprise
             documents.
@@ -1265,7 +1265,7 @@ function Workflows() {
         </div>
 
         <div className="feature-card">
-          <strong>🤖Decision Agent</strong>
+          <strong>??Decision Agent</strong>
           <span>
             Combines all agent outputs and generates a
             practical enterprise decision.
@@ -1396,7 +1396,7 @@ if (!response.ok) {
     return (
       <section className="page-panel">
         <span className="section-label">
-          ▥ NEXUS AI ANALYTICS
+          ? NEXUS AI ANALYTICS
         </span>
 
         <h2>Analytics</h2>
@@ -1410,7 +1410,7 @@ if (!response.ok) {
     return (
       <section className="page-panel">
         <span className="section-label">
-          ▥ NEXUS AI ANALYTICS
+          ? NEXUS AI ANALYTICS
         </span>
 
         <h2>Analytics</h2>
@@ -1424,7 +1424,7 @@ if (!response.ok) {
     <section className="page-panel">
 
       <span className="section-label">
-        ▥ NEXUS AI ANALYTICS
+        ? NEXUS AI ANALYTICS
       </span>
 
       <h2>Agent Analytics</h2>
@@ -1539,13 +1539,13 @@ function App() {
 const [authPage, setAuthPage] = useState("login");
 
  const navItems = [
-  { name: "Dashboard", icon: "⌂" },
-  { name: "AI Chat", icon: "✦" },
-  { name: "Agents", icon: "◈" },
-  { name: "Knowledge", icon: "▣" },
-  { name: "Workflows", icon: "⚙" },
-  { name: "Analytics", icon: "▥" },
-  { name: "Settings", icon: "⚙" },
+  { name: "Dashboard", icon: "�" },
+  { name: "AI Chat", icon: "?" },
+  { name: "Agents", icon: "?" },
+  { name: "Knowledge", icon: "?" },
+  { name: "Workflows", icon: "?" },
+  { name: "Analytics", icon: "?" },
+  { name: "Settings", icon: "?" },
 ];
 
   useEffect(() => {
@@ -1689,7 +1689,7 @@ if (!isLoggedIn) {
   onClick={handleLogout}
   title="Sign out of NEXUS AI"
 >
-  <span className="logout-icon">⇥</span>
+  <span className="logout-icon">?</span>
   <span>Logout</span>
 </button>
 

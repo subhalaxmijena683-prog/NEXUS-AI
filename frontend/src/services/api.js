@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8081";
+const API_BASE_URL = "https://nexus-ai-n3oc.onrender.com";
 
 // Check Spring Boot backend
 export async function checkBackendHealth() {

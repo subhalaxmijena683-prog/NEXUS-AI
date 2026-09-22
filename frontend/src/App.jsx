@@ -866,34 +866,79 @@ function Agents() {
     research: {
       name: "Research Agent",
       icon: "R",
-      description: "Web research and intelligence",
+      description: "Web research and enterprise intelligence",
       endpoint: "/api/agents/research",
       placeholder:
-        "Example: Research the benefits of AI agents in enterprise applications.",
+        "Example: Research how AI automation can reduce enterprise customer support costs.",
     },
 
     analyst: {
       name: "Data Analyst Agent",
       icon: "D",
-      description: "Data analysis and business insights",
+      description: "Business data analysis and insights",
       endpoint: "/api/agents/data-analyst",
       placeholder:
-        "Example: Analyze monthly sales data and identify important trends.",
+        "Example: Analyze customer support cost reduction strategies and identify key metrics.",
     },
 
     rag: {
       name: "RAG Knowledge Agent",
       icon: "K",
-      description: "Enterprise knowledge and document intelligence",
+      description: "Enterprise document intelligence",
       endpoint: "/api/agents/rag",
       placeholder:
-        "Example: What are the technical skills mentioned in my resume?",
+        "Example: What information in my uploaded enterprise documents is relevant to this problem?",
+    },
+
+    prediction: {
+      name: "ML Prediction Agent",
+      icon: "M",
+      description: "Scenario prediction and business forecasting",
+      endpoint: "/api/agents/ml-prediction",
+      placeholder:
+        "Example: Predict the likely business impact of implementing AI-powered customer support.",
+    },
+
+    decision: {
+      name: "Decision Agent",
+      icon: "D",
+      description: "Enterprise decision-making and recommendations",
+      endpoint: "/api/agents/decision",
+      placeholder:
+        "Use the full Autonomous Workflow for evidence-based decision generation.",
+    },
+
+    solution: {
+      name: "Solution Agent",
+      icon: "S",
+      description: "Enterprise solution architecture and implementation",
+      endpoint: "/api/agents/solution",
+      placeholder:
+        "Example: Design a practical AI-powered customer support solution.",
+    },
+
+    judge: {
+      name: "Judge Agent",
+      icon: "J",
+      description: "Validates decisions, solutions and predictions",
+      endpoint: "/api/agents/judge",
+      placeholder:
+        "Use the full Autonomous Workflow to evaluate the complete enterprise solution.",
     },
   };
 
   async function runAgent() {
     if (!task.trim()) {
       setError("Please enter a task for the agent.");
+      return;
+    }
+
+    // Decision and Judge require multiple agent outputs.
+    // Use the Autonomous Workflow for those agents.
+    if (selectedAgent === "decision" || selectedAgent === "judge") {
+      setError(
+        `${agents[selectedAgent].name} works with multiple agent outputs. Use the Autonomous Workflow page for complete execution.`
+      );
       return;
     }
 
@@ -942,7 +987,9 @@ function Agents() {
 
       if (!response.ok) {
         throw new Error(
-          data?.message || "Agent request failed."
+          data?.message ||
+            data?.error ||
+            `Agent request failed (${response.status})`
         );
       }
 
@@ -954,7 +1001,10 @@ function Agents() {
       );
     } catch (err) {
       console.error("Agent error:", err);
-      setError(err.message || "Unable to run agent.");
+
+      setError(
+        err.message || "Unable to run agent."
+      );
     } finally {
       setLoading(false);
     }
@@ -970,15 +1020,18 @@ function Agents() {
 
       <p>
         Execute specialized NEXUS AI agents for research,
-        analytics and enterprise knowledge intelligence.
+        analytics, knowledge retrieval, prediction and
+        enterprise solution design.
       </p>
 
       <div className="feature-grid">
 
-        {/* Research Agent */}
+        {/* Research */}
         <button
           className={`feature-card ${
-            selectedAgent === "research" ? "agent-selected" : ""
+            selectedAgent === "research"
+              ? "agent-selected"
+              : ""
           }`}
           onClick={() => {
             setSelectedAgent("research");
@@ -988,14 +1041,17 @@ function Agents() {
         >
           <strong>R Research Agent</strong>
           <span>
-            Research topics and generate intelligent insights.
+            Research enterprise problems and generate
+            intelligence.
           </span>
         </button>
 
         {/* Data Analyst */}
         <button
           className={`feature-card ${
-            selectedAgent === "analyst" ? "agent-selected" : ""
+            selectedAgent === "analyst"
+              ? "agent-selected"
+              : ""
           }`}
           onClick={() => {
             setSelectedAgent("analyst");
@@ -1005,14 +1061,16 @@ function Agents() {
         >
           <strong>D Data Analyst Agent</strong>
           <span>
-            Analyze data, identify trends and generate insights.
+            Analyze business information, trends and risks.
           </span>
         </button>
 
         {/* RAG */}
         <button
           className={`feature-card ${
-            selectedAgent === "rag" ? "agent-selected" : ""
+            selectedAgent === "rag"
+              ? "agent-selected"
+              : ""
           }`}
           onClick={() => {
             setSelectedAgent("rag");
@@ -1022,7 +1080,83 @@ function Agents() {
         >
           <strong>K RAG Knowledge Agent</strong>
           <span>
-            Ask questions using your uploaded enterprise documents.
+            Retrieve intelligence from enterprise documents.
+          </span>
+        </button>
+
+        {/* ML Prediction */}
+        <button
+          className={`feature-card ${
+            selectedAgent === "prediction"
+              ? "agent-selected"
+              : ""
+          }`}
+          onClick={() => {
+            setSelectedAgent("prediction");
+            setResult("");
+            setError("");
+          }}
+        >
+          <strong>M ML Prediction Agent</strong>
+          <span>
+            Generate scenario-based enterprise predictions.
+          </span>
+        </button>
+
+        {/* Decision */}
+        <button
+          className={`feature-card ${
+            selectedAgent === "decision"
+              ? "agent-selected"
+              : ""
+          }`}
+          onClick={() => {
+            setSelectedAgent("decision");
+            setResult("");
+            setError("");
+          }}
+        >
+          <strong>D Decision Agent</strong>
+          <span>
+            Combine evidence and generate enterprise decisions.
+          </span>
+        </button>
+
+        {/* Solution */}
+        <button
+          className={`feature-card ${
+            selectedAgent === "solution"
+              ? "agent-selected"
+              : ""
+          }`}
+          onClick={() => {
+            setSelectedAgent("solution");
+            setResult("");
+            setError("");
+          }}
+        >
+          <strong>S Solution Agent</strong>
+          <span>
+            Design practical enterprise solutions and plans.
+          </span>
+        </button>
+
+        {/* Judge */}
+        <button
+          className={`feature-card ${
+            selectedAgent === "judge"
+              ? "agent-selected"
+              : ""
+          }`}
+          onClick={() => {
+            setSelectedAgent("judge");
+            setResult("");
+            setError("");
+          }}
+        >
+          <strong>J Judge Agent</strong>
+          <span>
+            Validate decisions, solutions and predictions.
           </span>
         </button>
 
@@ -1038,7 +1172,10 @@ function Agents() {
           className="ai-input"
           placeholder={agents[selectedAgent].placeholder}
           value={task}
-          onChange={(e) => setTask(e.target.value)}
+          onChange={(e) => {
+            setTask(e.target.value);
+            setError("");
+          }}
         />
 
         <button
@@ -1046,7 +1183,9 @@ function Agents() {
           onClick={runAgent}
           disabled={loading}
         >
-          {loading ? "Running Agent..." : "Run Agent"}
+          {loading
+            ? "Running Agent..."
+            : "Run Agent"}
         </button>
 
         {error && (
@@ -1057,7 +1196,9 @@ function Agents() {
 
         {result && (
           <div className="ai-response">
-            <ReactMarkdown>{result}</ReactMarkdown>
+            <ReactMarkdown>
+              {result}
+            </ReactMarkdown>
           </div>
         )}
 
@@ -1179,14 +1320,17 @@ function Workflows() {
         `${API_BASE}/api/workflows/execute`,
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
+
             ...(token
               ? {
                   Authorization: `Bearer ${token}`,
                 }
               : {}),
           },
+
           body: JSON.stringify({
             problem: problem.trim(),
           }),
@@ -1203,7 +1347,9 @@ function Workflows() {
 
       if (!response.ok) {
         throw new Error(
-          data?.message || "Workflow execution failed."
+          data?.message ||
+            data?.error ||
+            `Workflow execution failed (${response.status})`
         );
       }
 
@@ -1211,12 +1357,15 @@ function Workflows() {
         data?.result ||
           "No workflow result generated."
       );
+
     } catch (err) {
       console.error("Workflow error:", err);
 
       setError(
-        err.message || "Unable to execute workflow."
+        err.message ||
+          "Unable to execute autonomous workflow."
       );
+
     } finally {
       setLoading(false);
     }
@@ -1226,69 +1375,108 @@ function Workflows() {
     <section className="page-panel">
 
       <span className="section-label">
-       AUTONOMOUS ENTERPRISE INTELLIGENCE
+        AUTONOMOUS ENTERPRISE INTELLIGENCE
       </span>
 
       <h2>Multi-Agent Workflows</h2>
 
       <p>
-        NEXUS AI coordinates specialized agents to transform
-        an enterprise problem into research, analysis,
-        knowledge-based reasoning and a final decision.
+        NEXUS AI autonomously coordinates specialized
+        intelligence agents to transform an enterprise
+        problem into a validated business solution.
       </p>
 
-      {/* Workflow Pipeline */}
+      {/* COMPLETE PIPELINE */}
+
       <div className="feature-grid">
 
         <div className="feature-card">
-          <strong>R Research Agent</strong>
+          <strong>01 · Research Agent</strong>
+
           <span>
-            Investigates the problem and gathers relevant
-            intelligence.
+            Investigates the enterprise problem and
+            gathers relevant intelligence.
           </span>
         </div>
 
         <div className="feature-card">
-          <strong>D Data Analyst Agent</strong>
+          <strong>02 · Data Analyst Agent</strong>
+
           <span>
-            Analyzes research findings, trends, risks and
-            opportunities.
+            Analyzes findings, patterns, metrics,
+            risks and opportunities.
           </span>
         </div>
 
         <div className="feature-card">
-          <strong>??� RAG Knowledge Agent</strong>
+          <strong>03 · RAG Knowledge Agent</strong>
+
           <span>
-            Retrieves relevant information from enterprise
-            documents.
+            Retrieves relevant information from
+            enterprise knowledge.
           </span>
         </div>
 
         <div className="feature-card">
-          <strong>J Decision Agent</strong>
+          <strong>04 · ML Prediction Agent</strong>
+
           <span>
-            Combines all agent outputs and generates a
-            practical enterprise decision.
+            Generates scenario-based predictions,
+            assumptions and business implications.
+          </span>
+        </div>
+
+        <div className="feature-card">
+          <strong>05 · Decision Agent</strong>
+
+          <span>
+            Synthesizes research, analysis and
+            knowledge into an enterprise decision.
+          </span>
+        </div>
+
+        <div className="feature-card">
+          <strong>06 · Solution Agent</strong>
+
+          <span>
+            Designs the recommended solution,
+            architecture and implementation plan.
+          </span>
+        </div>
+
+        <div className="feature-card">
+          <strong>07 · Judge Agent</strong>
+
+          <span>
+            Validates the prediction, decision and
+            solution before final output.
           </span>
         </div>
 
       </div>
 
-      {/* Workflow Runner */}
+      {/* WORKFLOW RUNNER */}
+
       <div className="feature-card agent-runner">
 
-        <h3>Enterprise Intelligence Workflow</h3>
+        <span className="section-label">
+          AUTONOMOUS EXECUTION
+        </span>
+
+        <h3>
+          Enterprise Intelligence Workflow
+        </h3>
 
         <p>
-          Enter a business problem and NEXUS AI will
-          automatically coordinate the complete multi-agent
-          workflow.
+          Enter one business problem. NEXUS AI will
+          automatically execute the complete seven-stage
+          intelligence pipeline.
         </p>
 
         <textarea
           className="ai-input"
-          rows="5"
-          placeholder="Example: Analyze how AI agents can improve enterprise productivity and decision making."
+          rows="6"
+          placeholder="Example: A company wants to reduce customer support costs while maintaining customer satisfaction."
           value={problem}
           onChange={(e) => {
             setProblem(e.target.value);
@@ -1302,9 +1490,27 @@ function Workflows() {
           disabled={loading}
         >
           {loading
-            ? "Executing Multi-Agent Workflow..."
+            ? "Executing 7-Agent Workflow..."
             : "Run Autonomous Workflow"}
         </button>
+
+        {loading && (
+          <div className="feature-card">
+            <p>
+              NEXUS AI is coordinating:
+            </p>
+
+            <p>
+              Research → Data Analysis → RAG →
+              ML Prediction → Decision → Solution → Judge
+            </p>
+
+            <small>
+              This may take some time because multiple
+              AI agents are executed sequentially.
+            </small>
+          </div>
+        )}
 
         {error && (
           <div className="agent-error">
@@ -1314,15 +1520,18 @@ function Workflows() {
 
       </div>
 
-      {/* Workflow Result */}
+      {/* FINAL RESULT */}
+
       {result && (
         <div className="feature-card">
 
           <span className="section-label">
-            WORKFLOW EXECUTION RESULT
+            FINAL ENTERPRISE INTELLIGENCE
           </span>
 
-          <h3>Autonomous Enterprise Intelligence</h3>
+          <h3>
+            Autonomous Workflow Result
+          </h3>
 
           <div className="ai-response">
             <ReactMarkdown>

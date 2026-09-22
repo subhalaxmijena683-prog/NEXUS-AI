@@ -1,4 +1,29 @@
 
+import {
+  LayoutDashboard,
+  MessageSquare,
+  Bot,
+  BookOpen,
+  Workflow,
+  BarChart3,
+  Settings as SettingsIcon,
+  Search,
+  Database,
+  BrainCircuit,
+  Play,
+  Plus,
+  LogOut,
+  FileText,
+  Upload,
+  ShieldCheck,
+  Bell,
+  RefreshCw,
+  Palette,
+  Sparkles,
+  CheckCircle2,
+  X,
+} from "lucide-react";
+
 import Login from "./Login";
 import Register from "./Register";
 import { useEffect, useState } from "react";
@@ -323,7 +348,7 @@ function Dashboard({ setActivePage }) {
       <div className="stats">
         <div className="stat-card">
           <span>AI Agents</span>
-          <strong>8</strong>
+          <strong>7</strong>
           <small>Specialized agents</small>
         </div>
 
@@ -363,7 +388,9 @@ function Dashboard({ setActivePage }) {
           </div>
 
           <div className="agent">
-            <div className="agent-icon">R</div>
+            <div className="agent-icon">
+              <Search size={18} />
+            </div>
 
             <div>
               <strong>Research Agent</strong>
@@ -374,7 +401,9 @@ function Dashboard({ setActivePage }) {
           </div>
 
           <div className="agent">
-            <div className="agent-icon">D</div>
+            <div className="agent-icon">
+             <BarChart3 size={18} />
+            </div>
 
             <div>
               <strong>Data Analyst</strong>
@@ -385,7 +414,9 @@ function Dashboard({ setActivePage }) {
           </div>
 
           <div className="agent">
-            <div className="agent-icon">K</div>
+            <div className="agent-icon">
+             <BookOpen size={18} />
+            </div>
 
             <div>
               <strong>Knowledge Agent</strong>
@@ -396,7 +427,9 @@ function Dashboard({ setActivePage }) {
           </div>
 
           <div className="agent">
-            <div className="agent-icon">J</div>
+            <div className="agent-icon">
+             <ShieldCheck size={18} />
+             </div>
 
             <div>
               <strong>Judge Agent</strong>
@@ -417,22 +450,22 @@ function Dashboard({ setActivePage }) {
 
           <div className="quick-actions">
             <button onClick={() => setActivePage("AI Chat")}>
-              <span>?</span>
-              Ask NEXUS AI
-            </button>
+                <span><MessageSquare size={17} /></span>
+                  Ask NEXUS AI
+                 </button>
 
             <button onClick={() => setActivePage("Knowledge")}>
-              <span>?</span>
-              Search Knowledge
+             <span><Search size={17} /></span>
+               Search Knowledge
             </button>
 
             <button onClick={() => setActivePage("Agents")}>
-              <span>?</span>
+              <span><BarChart3 size={17} /></span>
               Run AI Agent
             </button>
 
             <button onClick={() => setActivePage("Workflows")}>
-              <span>?</span>
+              <span><Settings size={17} /></span>
               Create Workflow
             </button>
           </div>
@@ -490,7 +523,7 @@ function Settings() {
 
           <div className="settings-card-header">
             <div className="settings-card-icon">
-              ??
+              <SettingsIcon size={20} />
             </div>
 
             <div>
@@ -542,7 +575,7 @@ function Settings() {
 
           <div className="settings-card-header">
             <div className="settings-card-icon ai-icon">
-              ?
+              <Sparkles size={20} />
             </div>
 
             <div>
@@ -614,7 +647,7 @@ function Settings() {
         <div className="preference-card">
 
           <div className="preference-icon">
-            ??
+           <Bell size={19} />
           </div>
 
           <div className="preference-content">
@@ -643,7 +676,7 @@ function Settings() {
         <div className="preference-card">
 
           <div className="preference-icon">
-            ?
+          <RefreshCw size={19} />
           </div>
 
           <div className="preference-content">
@@ -672,7 +705,7 @@ function Settings() {
         <div className="preference-card">
 
           <div className="preference-icon">
-            ?
+           <Palette size={19} />
           </div>
 
           <div className="preference-content">
@@ -832,24 +865,30 @@ function Settings() {
   );
 }
 
-function GenericPage({ title, description, icon }) {
+function GenericPage({ title, description, icon: Icon }) {
   return (
     <section className="page-panel">
-      <span className="section-label">{icon} NEXUS AI</span>
+      <span className="section-label">
+        {Icon && <Icon size={16} />}
+        NEXUS AI
+      </span>
 
       <h2>{title}</h2>
-
       <p>{description}</p>
 
       <div className="feature-grid">
         <div className="feature-card">
           <strong>Intelligent</strong>
-          <span>Powered by the NEXUS AI agent architecture.</span>
+          <span>
+            Powered by the NEXUS AI agent architecture.
+          </span>
         </div>
 
         <div className="feature-card">
           <strong>Enterprise Ready</strong>
-          <span>Designed for autonomous enterprise workflows.</span>
+          <span>
+            Designed for autonomous enterprise workflows.
+          </span>
         </div>
       </div>
     </section>
@@ -1748,13 +1787,13 @@ function App() {
 const [authPage, setAuthPage] = useState("login");
 
  const navItems = [
-  { name: "Dashboard", icon: "D" },
-  { name: "AI Chat", icon: "C" },
-  { name: "Agents", icon: "A" },
-  { name: "Knowledge", icon: "K" },
-  { name: "Workflows", icon: "W" },
-  { name: "Analytics", icon: "N" },
-  { name: "Settings", icon: "S" },
+  { name: "Dashboard", icon: LayoutDashboard },
+  { name: "AI Chat", icon: MessageSquare },
+  { name: "Agents", icon: Bot },
+  { name: "Knowledge", icon: BookOpen },
+  { name: "Workflows", icon: Workflow },
+  { name: "Analytics", icon: BarChart3 },
+  { name: "Settings", icon: SettingsIcon },
 ];
 
   useEffect(() => {
@@ -1850,7 +1889,9 @@ if (!isLoggedIn) {
       <aside className="sidebar">
 
         <div className="logo">
-          <div className="logo-icon">N</div>
+          <div className="logo-icon">
+          <BrainCircuit size={24} strokeWidth={1.8} />
+        </div>
 
           <div>
             <h2>NEXUS AI</h2>
@@ -1867,7 +1908,9 @@ if (!isLoggedIn) {
               }`}
               onClick={() => setActivePage(item.name)}
             >
-              <span className="nav-icon">{item.icon}</span>
+             <span className="nav-icon">
+              <item.icon size={18} strokeWidth={1.8} />
+              </span>
               <span>{item.name}</span>
             </button>
           ))}
@@ -1898,7 +1941,9 @@ if (!isLoggedIn) {
   onClick={handleLogout}
   title="Sign out of NEXUS AI"
 >
-  <span className="logout-icon">X</span>
+  <span className="logout-icon">
+  <LogOut size={17} />
+</span>
   <span>Logout</span>
 </button>
 

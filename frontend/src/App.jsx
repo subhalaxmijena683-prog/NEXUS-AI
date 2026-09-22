@@ -465,7 +465,7 @@ function Dashboard({ setActivePage }) {
             </button>
 
             <button onClick={() => setActivePage("Workflows")}>
-              <span><Settings size={17} /></span>
+             <span><Workflow size={17} /></span>
               Create Workflow
             </button>
           </div>

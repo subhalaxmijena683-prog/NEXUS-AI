@@ -37,7 +37,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
+        System.out.println(
+                "JWT FILTER → " +
+                request.getMethod() +
+                " " +
+                request.getRequestURI()
+        );
+
+        System.out.println(
+                "AUTH HEADER EXISTS → " +
+                (authHeader != null)
+        );
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("JWT FILTER → NO BEARER TOKEN");
             filterChain.doFilter(request, response);
             return;
         }
@@ -45,32 +58,52 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
 
         if (!jwtUtil.isTokenValid(token)) {
+            System.out.println("JWT FILTER → INVALID TOKEN");
             filterChain.doFilter(request, response);
             return;
         }
 
+        System.out.println("JWT FILTER → TOKEN VALID");
+
         String email = jwtUtil.extractEmail(token);
+
+        System.out.println(
+                "JWT FILTER → EMAIL = " + email
+        );
 
         if (email != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            userRepository.findByEmail(email).ifPresent(user -> {
+            userRepository.findByEmail(email).ifPresentOrElse(
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                user.getEmail(),
-                                null,
-                                AuthorityUtils.NO_AUTHORITIES
+                    user -> {
+
+                        UsernamePasswordAuthenticationToken authentication =
+                                new UsernamePasswordAuthenticationToken(
+                                        user.getEmail(),
+                                        null,
+                                        AuthorityUtils.NO_AUTHORITIES
+                                );
+
+                        authentication.setDetails(
+                                new WebAuthenticationDetailsSource()
+                                        .buildDetails(request)
                         );
 
-                authentication.setDetails(
-                        new WebAuthenticationDetailsSource()
-                                .buildDetails(request)
-                );
+                        SecurityContextHolder.getContext()
+                                .setAuthentication(authentication);
 
-                SecurityContextHolder.getContext()
-                        .setAuthentication(authentication);
-            });
+                        System.out.println(
+                                "JWT FILTER → USER AUTHENTICATED"
+                        );
+                    },
+
+                    () -> {
+                        System.out.println(
+                                "JWT FILTER → USER NOT FOUND: " + email
+                        );
+                    }
+            );
         }
 
         filterChain.doFilter(request, response);

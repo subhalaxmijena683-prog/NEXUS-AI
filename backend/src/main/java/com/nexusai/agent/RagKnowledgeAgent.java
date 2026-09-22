@@ -1,4 +1,3 @@
-```java
 package com.nexusai.agent;
 
 import com.nexusai.entity.DocumentChunk;
@@ -223,6 +222,7 @@ public class RagKnowledgeAgent {
     ) {
 
         if (a.size() != b.size()) {
+
             System.out.println(
                     "[RAG] Embedding dimension mismatch: "
                             + a.size()
@@ -258,4 +258,3 @@ public class RagKnowledgeAgent {
                 );
     }
 }
-```

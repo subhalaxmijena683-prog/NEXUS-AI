@@ -1,4 +1,3 @@
-
 import {
   LayoutDashboard,
   MessageSquare,
@@ -22,6 +21,8 @@ import {
   Sparkles,
   CheckCircle2,
   X,
+  GitBranch,
+  Lightbulb,
 } from "lucide-react";
 
 import Login from "./Login";
@@ -904,7 +905,7 @@ function Agents() {
   const agents = {
     research: {
       name: "Research Agent",
-      icon: "R",
+       icon: Search,
       description: "Web research and enterprise intelligence",
       endpoint: "/api/agents/research",
       placeholder:
@@ -912,8 +913,7 @@ function Agents() {
     },
 
     analyst: {
-      name: "Data Analyst Agent",
-      icon: "D",
+      icon: BarChart3,
       description: "Business data analysis and insights",
       endpoint: "/api/agents/data-analyst",
       placeholder:
@@ -922,7 +922,7 @@ function Agents() {
 
     rag: {
       name: "RAG Knowledge Agent",
-      icon: "K",
+      icon: BookOpen,
       description: "Enterprise document intelligence",
       endpoint: "/api/agents/rag",
       placeholder:
@@ -931,7 +931,7 @@ function Agents() {
 
     prediction: {
       name: "ML Prediction Agent",
-      icon: "M",
+      icon: BrainCircuit,
       description: "Scenario prediction and business forecasting",
       endpoint: "/api/agents/ml-prediction",
       placeholder:
@@ -940,7 +940,7 @@ function Agents() {
 
     decision: {
       name: "Decision Agent",
-      icon: "D",
+      icon: GitBranch,
       description: "Enterprise decision-making and recommendations",
       endpoint: "/api/agents/decision",
       placeholder:
@@ -949,7 +949,7 @@ function Agents() {
 
     solution: {
       name: "Solution Agent",
-      icon: "S",
+      icon: Lightbulb,
       description: "Enterprise solution architecture and implementation",
       endpoint: "/api/agents/solution",
       placeholder:
@@ -958,7 +958,7 @@ function Agents() {
 
     judge: {
       name: "Judge Agent",
-      icon: "J",
+        icon: ShieldCheck,
       description: "Validates decisions, solutions and predictions",
       endpoint: "/api/agents/judge",
       placeholder:
@@ -1078,7 +1078,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>R Research Agent</strong>
+          <strong className="agent-card-title">
+             <BarChart3 size={18} />
+             Data Analyst Agent
+            </strong>
           <span>
             Research enterprise problems and generate
             intelligence.
@@ -1098,7 +1101,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>D Data Analyst Agent</strong>
+          <strong className="agent-card-title">
+            <BarChart3 size={18} />
+            Data Analyst Agent
+          </strong>
           <span>
             Analyze business information, trends and risks.
           </span>
@@ -1117,7 +1123,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>K RAG Knowledge Agent</strong>
+          <strong className="agent-card-title">
+            <BookOpen size={18} />
+             RAG Knowledge Agent
+            </strong>
           <span>
             Retrieve intelligence from enterprise documents.
           </span>
@@ -1136,7 +1145,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>M ML Prediction Agent</strong>
+          <strong className="agent-card-title">
+            <BrainCircuit size={18} />
+            ML Prediction Agent
+           </strong>
           <span>
             Generate scenario-based enterprise predictions.
           </span>
@@ -1155,7 +1167,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>D Decision Agent</strong>
+          <strong className="agent-card-title">
+            <GitBranch size={18} />
+            Decision Agent
+           </strong>
           <span>
             Combine evidence and generate enterprise decisions.
           </span>
@@ -1174,7 +1189,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>S Solution Agent</strong>
+         <strong className="agent-card-title">
+          <Lightbulb size={18} />
+           Solution Agent
+           </strong>
           <span>
             Design practical enterprise solutions and plans.
           </span>
@@ -1193,7 +1211,10 @@ function Agents() {
             setError("");
           }}
         >
-          <strong>J Judge Agent</strong>
+          <strong className="agent-card-title">
+           <ShieldCheck size={18} />
+             Judge Agent
+            </strong>
           <span>
             Validate decisions, solutions and predictions.
           </span>

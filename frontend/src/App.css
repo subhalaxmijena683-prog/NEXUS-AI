@@ -1825,3 +1825,12 @@ nav {
     margin-left: 0;
   }
 }
+.agent-card-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.agent-card-title svg {
+  flex-shrink: 0;
+}

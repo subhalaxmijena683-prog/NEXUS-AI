@@ -1,10 +1,11 @@
+```java
 package com.nexusai.agent;
 
 import com.nexusai.entity.DocumentChunk;
 import com.nexusai.repository.DocumentChunkRepository;
 import com.nexusai.service.AnalyticsService;
-import com.nexusai.service.LLMService;
 import com.nexusai.service.GeminiEmbeddingService;
+import com.nexusai.service.LLMService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.util.List;
 public class RagKnowledgeAgent {
 
     private final DocumentChunkRepository documentChunkRepository;
-   private final GeminiEmbeddingService embeddingService;
+    private final GeminiEmbeddingService embeddingService;
     private final AnalyticsService analyticsService;
     private final LLMService llmService;
 
@@ -39,43 +40,66 @@ public class RagKnowledgeAgent {
             );
         }
 
-        LocalDateTime startedAt =
-                LocalDateTime.now();
-
-        long startTime =
-                System.currentTimeMillis();
+        LocalDateTime startedAt = LocalDateTime.now();
+        long startTime = System.currentTimeMillis();
 
         try {
 
-            /*
-             * 1. Generate embedding for the user question.
-             */
+            System.out.println("[RAG] Question: " + question);
 
+            // 1. Generate Gemini embedding for the user question
             List<Double> questionEmbedding =
                     embeddingService.generateEmbedding(question);
 
-            /*
-             * 2. Load document chunks.
-             */
+            System.out.println(
+                    "[RAG] Question embedding size: "
+                            + questionEmbedding.size()
+            );
 
+            // 2. Load document chunks
             List<DocumentChunk> chunks =
                     documentChunkRepository.findAll();
 
+            System.out.println(
+                    "[RAG] Total document chunks: "
+                            + chunks.size()
+            );
+
             if (chunks.isEmpty()) {
+
+                System.out.println(
+                        "[RAG] No document chunks found."
+                );
 
                 return "No enterprise knowledge has been uploaded yet.";
             }
 
-            /*
-             * 3. Find the most similar chunks.
-             */
-
-            List<DocumentChunk> relevantChunks =
+            // 3. Keep only chunks with embeddings
+            List<DocumentChunk> embeddedChunks =
                     chunks.stream()
                             .filter(chunk ->
                                     chunk.getEmbedding() != null
                                             && !chunk.getEmbedding().isBlank()
                             )
+                            .toList();
+
+            System.out.println(
+                    "[RAG] Chunks with embeddings: "
+                            + embeddedChunks.size()
+            );
+
+            if (embeddedChunks.isEmpty()) {
+
+                System.out.println(
+                        "[RAG] Document chunks exist, but no embeddings were found."
+                );
+
+                return "The document was uploaded, but its knowledge embeddings are not available yet. Please upload the document again.";
+            }
+
+            // 4. Find most similar chunks
+            List<DocumentChunk> relevantChunks =
+                    embeddedChunks.stream()
                             .sorted(
                                     Comparator.comparingDouble(
                                             chunk -> -cosineSimilarity(
@@ -89,10 +113,12 @@ public class RagKnowledgeAgent {
                             .limit(5)
                             .toList();
 
-            /*
-             * 4. Build knowledge context.
-             */
+            System.out.println(
+                    "[RAG] Relevant chunks selected: "
+                            + relevantChunks.size()
+            );
 
+            // 5. Build knowledge context
             StringBuilder context =
                     new StringBuilder();
 
@@ -107,10 +133,7 @@ public class RagKnowledgeAgent {
                 );
             }
 
-            /*
-             * 5. Prepare RAG system instructions.
-             */
-
+            // 6. RAG system prompt
             String systemPrompt = """
                     You are the NEXUS AI RAG Knowledge Agent.
 
@@ -119,18 +142,14 @@ public class RagKnowledgeAgent {
 
                     IMPORTANT RULES:
 
-                    1. Use the provided knowledge context.
+                    1. Use only the provided knowledge context.
                     2. Do not invent facts.
-                    3. If the answer is not present in the
-                       retrieved knowledge, clearly say that
-                       the information is not available.
+                    3. If the answer is not present in the context,
+                       clearly say that the information is not available.
                     4. Give a concise and useful answer.
                     """;
 
-            /*
-             * 6. Prepare user prompt with retrieved context.
-             */
-
+            // 7. User prompt
             String userPrompt = """
                     ENTERPRISE KNOWLEDGE:
 
@@ -144,25 +163,14 @@ public class RagKnowledgeAgent {
                             question
                     );
 
-            /*
-             * 7. Generate answer.
-             *
-             * LLMService handles:
-             *
-             * Gemini → Primary
-             * Ollama → Fallback
-             */
-
+            // 8. Generate answer using Gemini
             String result =
                     llmService.generate(
                             systemPrompt,
                             userPrompt
                     );
 
-            /*
-             * 8. Record successful execution.
-             */
-
+            // 9. Record success
             long durationMs =
                     System.currentTimeMillis()
                             - startTime;
@@ -177,10 +185,6 @@ public class RagKnowledgeAgent {
 
         } catch (Exception e) {
 
-            /*
-             * 9. Record failed execution.
-             */
-
             long durationMs =
                     System.currentTimeMillis()
                             - startTime;
@@ -190,6 +194,11 @@ public class RagKnowledgeAgent {
                     startedAt,
                     durationMs,
                     e.getMessage()
+            );
+
+            System.out.println(
+                    "[RAG] ERROR: "
+                            + e.getMessage()
             );
 
             throw e;
@@ -214,6 +223,13 @@ public class RagKnowledgeAgent {
     ) {
 
         if (a.size() != b.size()) {
+            System.out.println(
+                    "[RAG] Embedding dimension mismatch: "
+                            + a.size()
+                            + " vs "
+                            + b.size()
+            );
+
             return -1.0;
         }
 
@@ -227,9 +243,7 @@ public class RagKnowledgeAgent {
             double valueB = b.get(i);
 
             dotProduct += valueA * valueB;
-
             magnitudeA += valueA * valueA;
-
             magnitudeB += valueB * valueB;
         }
 
@@ -244,3 +258,4 @@ public class RagKnowledgeAgent {
                 );
     }
 }
+```

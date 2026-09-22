@@ -4,7 +4,7 @@ import com.nexusai.entity.DocumentChunk;
 import com.nexusai.repository.DocumentChunkRepository;
 import com.nexusai.service.AnalyticsService;
 import com.nexusai.service.LLMService;
-import com.nexusai.service.OllamaEmbeddingService;
+import com.nexusai.service.GeminiEmbeddingService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,13 +15,13 @@ import java.util.List;
 public class RagKnowledgeAgent {
 
     private final DocumentChunkRepository documentChunkRepository;
-    private final OllamaEmbeddingService embeddingService;
+   private final GeminiEmbeddingService embeddingService;
     private final AnalyticsService analyticsService;
     private final LLMService llmService;
 
     public RagKnowledgeAgent(
             DocumentChunkRepository documentChunkRepository,
-            OllamaEmbeddingService embeddingService,
+            GeminiEmbeddingService embeddingService,
             AnalyticsService analyticsService,
             LLMService llmService
     ) {

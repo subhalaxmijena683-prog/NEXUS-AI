@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 public class DocumentChunkService {
 
     private final DocumentChunkRepository documentChunkRepository;
-    private final OllamaEmbeddingService embeddingService;
+    private final GeminiEmbeddingService embeddingService;
 
     public DocumentChunkService(
             DocumentChunkRepository documentChunkRepository,
-            OllamaEmbeddingService embeddingService
+            GeminiEmbeddingService embeddingService
     ) {
         this.documentChunkRepository = documentChunkRepository;
         this.embeddingService = embeddingService;
@@ -31,7 +31,8 @@ public class DocumentChunkService {
         int chunkSize = 500;
         int overlap = 50;
 
-        List<DocumentChunk> chunks = new ArrayList<>();
+        List<DocumentChunk> chunks =
+                new ArrayList<>();
 
         if (text == null || text.isBlank()) {
             return chunks;
@@ -47,10 +48,12 @@ public class DocumentChunkService {
                     text.length()
             );
 
-            String chunkText = text.substring(start, end);
+            String chunkText =
+                    text.substring(start, end);
 
+            // Generate Gemini embedding
             List<Double> embedding =
-                    embeddingService.generateEmbedding(chunkText);
+        embeddingService.generateDocumentEmbedding(chunkText);
 
             String embeddingString =
                     embedding.stream()
